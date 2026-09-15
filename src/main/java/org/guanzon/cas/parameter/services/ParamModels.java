@@ -1,6 +1,8 @@
 package org.guanzon.cas.parameter.services;
 
 import org.guanzon.appdriver.base.GRiderCAS;
+import org.guanzon.cas.parameter.model.Model_Account_Chart;
+import org.guanzon.cas.parameter.model.Model_Account_ChartX;
 import org.guanzon.cas.parameter.model.Model_Affiliated_Company;
 import org.guanzon.cas.parameter.model.Model_Banks;
 import org.guanzon.cas.parameter.model.Model_Banks_Branch;
@@ -40,6 +42,7 @@ import org.guanzon.cas.parameter.model.Model_Section;
 import org.guanzon.cas.parameter.model.Model_Size;
 import org.guanzon.cas.parameter.model.Model_Tax_Code;
 import org.guanzon.cas.parameter.model.Model_Term;
+import org.guanzon.cas.parameter.model.Model_Transaction_Account_Chart;
 import org.guanzon.cas.parameter.model.Model_TownCity;
 import org.guanzon.cas.parameter.model.Model_Unit_Conversion;
 import org.guanzon.cas.parameter.model.Model_Warehouse;
@@ -784,6 +787,57 @@ public class ParamModels {
         return this.poConversion;
     }
 
+    public Model_Account_Chart AccountChart() {
+        if (poGRider == null) {
+            System.err.println("ParamModels.AccountChart: Application driver is not set.");
+            return null;
+        }
+
+        if (poAccountChart == null) {
+            poAccountChart = new Model_Account_Chart();
+            poAccountChart.setApplicationDriver(poGRider);
+            poAccountChart.setXML("Model_Account_Chart");
+            poAccountChart.setTableName("Account_Chart");
+            poAccountChart.initialize();
+        }
+
+        return poAccountChart;
+    }
+
+    public Model_Account_ChartX AccountChartX() {
+        if (poGRider == null) {
+            System.err.println("ParamModels.AccountChartX: Application driver is not set.");
+            return null;
+        }
+
+        if (poAccountChartX == null) {
+            poAccountChartX = new Model_Account_ChartX();
+            poAccountChartX.setApplicationDriver(poGRider);
+            poAccountChartX.setXML("Model_Account_Chart");
+            poAccountChartX.setTableName("Account_Chart");
+            poAccountChartX.initialize();
+        }
+
+        return poAccountChartX;
+    }
+
+    public Model_Transaction_Account_Chart TransactionAccountChart() {
+        if (poGRider == null) {
+            System.err.println("ParamModels.TransactionAccountChart: Application driver is not set.");
+            return null;
+        }
+
+        if (poTransactionAccountChart == null) {
+            poTransactionAccountChart = new Model_Transaction_Account_Chart();
+            poTransactionAccountChart.setApplicationDriver(poGRider);
+            poTransactionAccountChart.setXML("Model_Transaction_Account_Chart");
+            poTransactionAccountChart.setTableName("Transaction_Account_Chart");
+            poTransactionAccountChart.initialize();
+        }
+
+        return poTransactionAccountChart;
+    }
+
     private final GRiderCAS poGRider;
 
     private Model_Barangay poBarangay;
@@ -830,4 +884,7 @@ public class ParamModels {
     private Model_xxxTransactionSourceTable poTransactionSourceTable;
     private Model_Project poProject;
     private Model_Unit_Conversion poConversion;
+    private Model_Account_Chart poAccountChart;
+    private Model_Account_ChartX poAccountChartX;
+    private Model_Transaction_Account_Chart poTransactionAccountChart;
 }
