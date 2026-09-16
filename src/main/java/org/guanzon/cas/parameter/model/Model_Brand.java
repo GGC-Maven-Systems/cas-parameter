@@ -107,7 +107,7 @@ public class Model_Brand extends Model {
             poIndustry.initialize();
         }
 
-        String industryId = (String) getValue("sIndstCdx");
+        String industryId = (String) (getValue("sIndstCdx") == null ? "" : getValue("sIndstCdx"));
 
         if (!"".equals(industryId)){
             if (poIndustry.getEditMode() == EditMode.READY &&

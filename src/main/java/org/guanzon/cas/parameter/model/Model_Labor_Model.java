@@ -56,7 +56,7 @@ public class Model_Labor_Model extends Model {
             poModel.initialize();
         }
 
-        String modelId = (String) getValue("sModelIDx");
+        String modelId = (String) (getValue("sModelIDx") == null ? "" : getValue("sModelIDx"));
 
         if (!"".equals(modelId)) {
             if (poModel.getEditMode() == EditMode.READY
@@ -91,8 +91,8 @@ public class Model_Labor_Model extends Model {
             poLabor.setTableName("Labor");
             poLabor.initialize();
         }
-
-        String laborId = (String) getValue("sLaborIDx");
+        
+        String laborId = (String) (getValue("sLaborIDx") == null ? "" : getValue("sLaborIDx"));
 
         if (!"".equals(laborId)) {
             if (poLabor.getEditMode() == EditMode.READY

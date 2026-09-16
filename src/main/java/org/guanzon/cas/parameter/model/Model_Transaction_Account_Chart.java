@@ -8,17 +8,17 @@ import org.guanzon.appdriver.constant.EditMode;
 import org.guanzon.appdriver.constant.RecordStatus;
 import org.json.simple.JSONObject;
 
-public class Model_Salesman extends Model {
+public class Model_Transaction_Account_Chart extends Model {
     @Override
     public void initialize() {
         try {
             poEntity = MiscUtil.xml2ResultSet(System.getProperty("sys.default.path.metadata") + XML, getTable());
-            
+
             poEntity.last();
             poEntity.moveToInsertRow();
 
             MiscUtil.initRowSet(poEntity);
-            
+
             //assign default values
             poEntity.updateString("cRecdStat", RecordStatus.ACTIVE);
             //end - assign default values
@@ -29,67 +29,56 @@ public class Model_Salesman extends Model {
             poEntity.absolute(1);
 
             ID = poEntity.getMetaData().getColumnLabel(1);
-            
-            //initialize other connections
-            //end - initialize other connections
-            
+
             pnEditMode = EditMode.UNKNOWN;
         } catch (SQLException e) {
             logwrapr.severe(e.getMessage());
             System.exit(1);
         }
     }
-    
-    public JSONObject setBankID(String bankId) {
-        return setValue("sBankIDxx", bankId);
+
+    public JSONObject setGLCode(String generalLedgerCode) {
+        return setValue("sGLCodexx", generalLedgerCode);
     }
 
-    public String getBankID() {
-        return (String) getValue("sBankIDxx");
+    public String getGLCode() {
+        return (String) getValue("sGLCodexx");
     }
 
-    public JSONObject setBankName(String bankName) {
-        return setValue("sBankName", bankName);
+    public JSONObject setDescription(String description) {
+        return setValue("sGLDescxx", description);
     }
 
-    public String getBankName() {
-        return (String) getValue("sBankName");
+    public String getDescription() {
+        return (String) getValue("sGLDescxx");
     }
 
-    
-    public JSONObject setBankCode(String bankCode) {
-        return setValue("sBankCode", bankCode);
-    }
-
-    public String getBankCode() {
-        return (String) getValue("sBankCode");
-    }
-
-    public JSONObject setRecordStatus(String recordStatus) {
+    public JSONObject setRecordStatus(String recordStatus){
         return setValue("cRecdStat", recordStatus);
     }
 
     public String getRecordStatus() {
         return (String) getValue("cRecdStat");
-    } 
-    
-    public JSONObject setModifyingId(String modifyingId){
+    }
+
+    public JSONObject setModifyingId(String modifyingId) {
         return setValue("sModified", modifyingId);
     }
-    
-    public String getModifyingId(){
+
+    public String getModifyingId() {
         return (String) getValue("sModified");
     }
-    
-    public JSONObject setModifiedDate(Date modifiedDate){
+
+    public JSONObject setModifiedDate(Date modifiedDate) {
         return setValue("dModified", modifiedDate);
     }
-    
-    public Date getModifiedDate(){
+
+    public Date getModifiedDate() {
         return (Date) getValue("dModified");
     }
+
     @Override
-    public String getNextCode() {
-        return MiscUtil.getNextCode(getTable(), ID, true, poGRider.getGConnection().getConnection(), poGRider.getBranchCode());
+    public String getNextCode(){
+        return "";
     }
 }

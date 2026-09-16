@@ -160,7 +160,7 @@ public class Model_Inventory_Count_Type extends Model {
             poDepartment.initialize();
         }
 
-        String departmentId = (String) getValue("sDeptIDxx");
+        String departmentId = (String) (getValue("sDeptIDxx") == null ? "" : getValue("sDeptIDxx"));
 
         if (!"".equals(departmentId)) {
             if (poDepartment.getEditMode() == EditMode.READY
@@ -196,7 +196,7 @@ public class Model_Inventory_Count_Type extends Model {
             poIndustry.initialize();
         }
 
-        String industryId = (String) getValue("sIndstCdx");
+        String industryId = (String) (getValue("sIndstCdx") == null ? "" : getValue("sIndstCdx"));
 
         if (!"".equals(industryId)) {
             if (poIndustry.getEditMode() == EditMode.READY

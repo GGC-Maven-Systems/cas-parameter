@@ -54,7 +54,7 @@ private Model_TownCity poTown;
             poBanks.initialize();
         }
 
-        String bankId = (String) getValue("sBankIDxx");
+        String bankId = (String) (getValue("sBankIDxx") == null ? "" : getValue("sBankIDxx"));
 
         if (!"".equals(bankId)){
             if (poBanks.getEditMode() == EditMode.READY &&
@@ -91,7 +91,7 @@ private Model_TownCity poTown;
             poTown.initialize();
         }
 
-        String townId = (String) getValue("sTownIDxx");
+        String townId = (String) (getValue("sTownIDxx") == null ? "" : getValue("sTownIDxx"));
 
         if (!"".equals(townId)){
             if (poTown.getEditMode() == EditMode.READY &&

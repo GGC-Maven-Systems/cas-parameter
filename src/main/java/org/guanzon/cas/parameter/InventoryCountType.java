@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.guanzon.appdriver.agent.ShowDialogFX;
 import org.guanzon.appdriver.agent.services.Parameter;
+import org.guanzon.appdriver.agent.services.ReferenceCache;
 import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
@@ -60,6 +61,14 @@ public class InventoryCountType extends Parameter {
     @Override
     public Model_Inventory_Count_Type getModel() {
         return poModel;
+    }
+
+    @Override
+    protected void saveComplete() {
+        //Every lazy InventoryCountType() accessor across the model layer serves repeat lookups
+        //for this id from ReferenceCache - drop the stale snapshot now that the record has
+        //changed.
+        ReferenceCache.invalidate("Inventory_Count_Type", poModel.getInventoryCountID());
     }
 
     @Override

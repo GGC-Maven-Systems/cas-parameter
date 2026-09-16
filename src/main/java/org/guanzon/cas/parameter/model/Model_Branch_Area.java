@@ -149,7 +149,7 @@ public class Model_Branch_Area extends Model {
             this.poIndustry.initialize();
         }
 
-        String industryId = (String) getValue("cDivision");
+        String industryId = (String) (getValue("cDivision") == null ? "" : getValue("cDivision"));
 
         if (!"".equals(industryId)) {
             if (this.poIndustry.getEditMode() == EditMode.READY && this.poIndustry

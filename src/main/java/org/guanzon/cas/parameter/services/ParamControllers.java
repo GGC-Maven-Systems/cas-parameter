@@ -778,7 +778,44 @@ public class ParamControllers {
         return this.poUnitConversion;
     }
 
-            
+    public AccountChart AccountChart() throws SQLException, GuanzonException {
+        if (poGRider == null) {
+            poLogWrapper.severe("ParamControllers.AccountChart: Application driver is not set.");
+            return null;
+        }
+
+        if (poAccountChart != null) {
+            return poAccountChart;
+        }
+
+        poAccountChart = new AccountChart();
+        poAccountChart.setApplicationDriver(poGRider);
+        poAccountChart.setWithParentClass(false);
+        poAccountChart.setLogWrapper(poLogWrapper);
+        poAccountChart.initialize();
+        return poAccountChart;
+    }
+
+    public TransactionAccountChart TransactionAccountChart() throws SQLException, GuanzonException {
+        if (poGRider == null) {
+            poLogWrapper.severe("ParamControllers.TransactionAccountChart: Application driver is not set.");
+            return null;
+        }
+
+        if (poTransactionAccountChart != null) {
+            return poTransactionAccountChart;
+        }
+
+        poTransactionAccountChart = new TransactionAccountChart();
+        poTransactionAccountChart.setApplicationDriver(poGRider);
+        poTransactionAccountChart.setWithParentClass(false);
+        poTransactionAccountChart.setLogWrapper(poLogWrapper);
+        poTransactionAccountChart.initialize();
+        poTransactionAccountChart.newRecord();
+        return poTransactionAccountChart;
+    }
+
+
     private GRiderCAS poGRider;
     private LogWrapper poLogWrapper;
 
@@ -823,4 +860,6 @@ public class ParamControllers {
     private TransactionSourceTable poTransactionSourceTable;
     private Project poProject;
     private UnitConversion poUnitConversion;
+    private AccountChart poAccountChart;
+    private TransactionAccountChart poTransactionAccountChart;
 }

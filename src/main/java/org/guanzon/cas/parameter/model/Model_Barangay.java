@@ -155,6 +155,7 @@ public class Model_Barangay extends Model{
             poTownCity.setTableName("TownCity");
             poTownCity.initialize();
         }
+        
         return poTownCity;
     }
     

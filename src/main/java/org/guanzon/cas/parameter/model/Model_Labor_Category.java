@@ -56,7 +56,7 @@ public class Model_Labor_Category extends Model {
             poModelCategory.initialize();
         }
 
-        String categoryId = (String) getValue("sCategrCd");
+        String categoryId = (String) (getValue("sCategrCd") == null ? "" : getValue("sCategrCd"));
 
         if (!"".equals(categoryId)) {
             if (poModelCategory.getEditMode() == EditMode.READY
@@ -92,7 +92,7 @@ public class Model_Labor_Category extends Model {
             poLabor.initialize();
         }
 
-        String laborId = (String) getValue("sLaborIDx");
+        String laborId = (String) (getValue("sLaborIDx") == null ? "" : getValue("sLaborIDx"));
 
         if (!"".equals(laborId)) {
             if (poLabor.getEditMode() == EditMode.READY
@@ -166,6 +166,4 @@ public class Model_Labor_Category extends Model {
     public Date getModifiedDate() {
         return (Date) getValue("dModified");
     }
-    
-    
 }

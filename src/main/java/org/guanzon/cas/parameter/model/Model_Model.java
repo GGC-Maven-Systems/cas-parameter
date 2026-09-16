@@ -56,8 +56,8 @@ public class Model_Model extends Model {
             poBrand.setTableName("Brand");
             poBrand.initialize();
         }
-
-        String brandId = (String) getValue("sBrandIDx");
+        
+        String brandId = (String) (getValue("sBrandIDx") == null ? "" : getValue("sBrandIDx"));
 
         if (!"".equals(brandId)){
             if (poBrand.getEditMode() == EditMode.READY &&

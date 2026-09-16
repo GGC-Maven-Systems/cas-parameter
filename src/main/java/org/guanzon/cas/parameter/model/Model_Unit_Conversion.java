@@ -118,8 +118,8 @@ public class Model_Unit_Conversion extends Model {
             poMeasure.setTableName("Measure");
             poMeasure.initialize();
         }
-
-        String measureId = (String) getValue("sMeasurID");
+        
+        String measureId = (String) (getValue("sMeasurID") == null ? "" : getValue("sMeasurID"));
 
         if (!"".equals(measureId)) {
             if (poMeasure.getEditMode() == EditMode.READY
@@ -154,7 +154,7 @@ public class Model_Unit_Conversion extends Model {
             poConvert.initialize();
         }
 
-        String convertId = (String) getValue("sConvrtID");
+        String convertId = (String) (getValue("sConvrtID") == null ? "" : getValue("sConvrtID"));
 
         if (!"".equals(convertId)) {
             if (poConvert.getEditMode() == EditMode.READY

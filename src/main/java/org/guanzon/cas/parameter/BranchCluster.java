@@ -7,6 +7,7 @@ import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
 import org.json.simple.JSONObject;
+import org.guanzon.appdriver.agent.services.ReferenceCache;
 import org.guanzon.cas.parameter.model.Model_Branch_Cluster;
 import org.guanzon.cas.parameter.services.ParamModels;
 
@@ -49,6 +50,13 @@ public class BranchCluster extends Parameter {
 
     public Model_Branch_Cluster getModel() {
         return this.poModel;
+    }
+
+    @Override
+    protected void saveComplete() {
+        //Every lazy BranchCluster() accessor across the model layer serves repeat lookups for
+        //this id from ReferenceCache - drop the stale snapshot now that the record has changed.
+        ReferenceCache.invalidate("Branch_Cluster", poModel.getClusterID());
     }
 
     public JSONObject searchRecord(String value, boolean byCode) throws SQLException, GuanzonException {

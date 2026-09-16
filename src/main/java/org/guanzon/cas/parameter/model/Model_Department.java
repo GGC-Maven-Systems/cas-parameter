@@ -174,8 +174,8 @@ public class Model_Department extends Model {
             poIndustry.setTableName("Industry");
             poIndustry.initialize();
         }
-
-        String industryId = (String) getValue("sIndstCdx");
+        
+        String industryId = (String) (getValue("sIndstCdx") == null ? "" : getValue("sIndstCdx"));
 
         if (!"".equals(industryId)) {
             if (poIndustry.getEditMode() == EditMode.READY

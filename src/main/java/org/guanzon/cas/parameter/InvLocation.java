@@ -3,6 +3,7 @@ package org.guanzon.cas.parameter;
 import java.sql.SQLException;
 import org.guanzon.appdriver.agent.ShowDialogFX;
 import org.guanzon.appdriver.agent.services.Parameter;
+import org.guanzon.appdriver.agent.services.ReferenceCache;
 import org.guanzon.appdriver.base.GuanzonException;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.base.SQLUtil;
@@ -65,7 +66,14 @@ public class InvLocation extends Parameter{
     public Model_Inv_Location getModel() {
         return poModel;
     }
-    
+
+    @Override
+    protected void saveComplete() {
+        //Model_POR_Serial.Location() serves repeat lookups for this id from ReferenceCache -
+        //drop the stale snapshot now that the record has changed.
+        ReferenceCache.invalidate("Inv_Location", poModel.getLocationId());
+    }
+
     @Override
     public JSONObject searchRecord(String value, boolean byCode) throws SQLException, GuanzonException{
         String lsSQL = getSQ_Browse();

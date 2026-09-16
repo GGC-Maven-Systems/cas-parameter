@@ -54,7 +54,7 @@ public class Model_Category_Level2 extends Model {
             poCategory.initialize();
         }
 
-        String categoryId = (String) getValue("sMainCatx");
+        String categoryId = (String) (getValue("sMainCatx") == null ? "" : getValue("sMainCatx"));
 
         if (!"".equals(categoryId)){
             if (poCategory.getEditMode() == EditMode.READY &&
@@ -90,7 +90,7 @@ public class Model_Category_Level2 extends Model {
             poInvType.initialize();
         }
 
-        String invTypeId = (String) getValue("sInvTypCd");
+        String invTypeId = (String) (getValue("sInvTypCd") == null ? "" : getValue("sInvTypCd"));
 
         if (!"".equals(invTypeId)){
             if (poInvType.getEditMode() == EditMode.READY &&

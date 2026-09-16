@@ -114,9 +114,9 @@ public class Model_Inv_Location extends Model {
             poWarehouse.setXML("Model_Warehouse");
             poWarehouse.setTableName("Warehouse");
             poWarehouse.initialize();
-        }
-
-        String warehouseId = (String) getValue("sWHouseID");
+        }        
+        
+        String warehouseId = (String) (getValue("sWHouseID") == null ? "" : getValue("sWHouseID"));
 
         if (!"".equals(warehouseId)){
             if (poWarehouse.getEditMode() == EditMode.READY &&
@@ -153,7 +153,7 @@ public class Model_Inv_Location extends Model {
             poSection.initialize();
         }
 
-        String sectionId = (String) getValue("sSectnIDx");
+        String sectionId = (String) (getValue("sSectnIDx") == null ? "" : getValue("sSectnIDx"));
 
         if (!"".equals(sectionId)){
             if (poSection.getEditMode() == EditMode.READY &&

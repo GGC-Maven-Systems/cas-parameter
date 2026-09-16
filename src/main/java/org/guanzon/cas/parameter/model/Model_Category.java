@@ -111,7 +111,7 @@ public class Model_Category extends Model {
             poIndustry.initialize();
         }
 
-        String industryId = (String) getValue("sIndstCdx");
+        String industryId = (String) (getValue("sIndstCdx") == null ? "" : getValue("sIndstCdx"));
 
         if (!"".equals(industryId)){
             if (poIndustry.getEditMode() == EditMode.READY &&
@@ -156,7 +156,7 @@ public class Model_Category extends Model {
                 poInvType.getInventoryTypeId().equals((String) getValue("sInvTypCd")))
                 return poInvType;
             else{
-                String invTypeId = (String) getValue("sInvTypCd");
+                String invTypeId = (String) (getValue("sInvTypCd") == null ? "" : getValue("sInvTypCd"));
 
                 if (ReferenceCache.tryLoad("Inv_Type", invTypeId, poInvType)) {
                     return poInvType;

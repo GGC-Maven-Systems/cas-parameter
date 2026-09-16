@@ -52,7 +52,7 @@ public class Model_Branch extends Model {
             poTown.initialize();
         }
 
-        String townId = (String) getValue("sTownIDxx");
+        String townId = (String) (getValue("sTownIDxx") == null ? "" : getValue("sTownIDxx"));
 
         if (!"".equals(townId)){
             if (poTown.getEditMode() == EditMode.READY &&
