@@ -24,6 +24,7 @@ public class Model_Brand extends Model {
             MiscUtil.initRowSet(poEntity);
             
             //assign default values
+            poEntity.updateNull("sBrandCde");
             poEntity.updateString("cRecdStat", RecordStatus.ACTIVE);
             //end - assign default values
 
@@ -58,6 +59,15 @@ public class Model_Brand extends Model {
 
     public String getDescription() {
         return (String) getValue("sDescript");
+    }
+    
+
+    public JSONObject setBrandCode(String brandCode) {
+        return setValue("sBrandCde", brandCode);
+    }
+
+    public String getBrandCode() {
+        return (String) getValue("sBrandCde");
     }
 
     
