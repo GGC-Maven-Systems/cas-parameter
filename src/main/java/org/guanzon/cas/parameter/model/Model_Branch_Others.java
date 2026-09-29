@@ -20,6 +20,7 @@ public class Model_Branch_Others extends Model {
     private Model_Branch_Area poBranchArea;
     private Model_Brand poBrand;
     private Model_Industry poIndustry;
+    private Model_Branch_Cluster poBranchCluster;
     //add dealer
 
     @Override
@@ -710,6 +711,23 @@ public class Model_Branch_Others extends Model {
         }
         this.poBranchArea.initialize();
         return this.poBranchArea;
+    }
+    
+     public Model_Branch_Cluster BranchCluster() throws SQLException, GuanzonException {
+        if (!"".equals(getValue("sClustrID"))) {
+            if (this.poBranchCluster.getEditMode() == 1 && this.poBranchCluster
+                    .getClusterID().equals(getValue("sClustrID"))) {
+                return this.poBranchCluster;
+            }
+            this.poJSON = this.poBranchCluster.openRecord((String) getValue("sClustrID"),getValue("cDivision"));
+            if ("success".equals(this.poJSON.get("result"))) {
+                return this.poBranchCluster;
+            }
+            this.poBranchCluster.initialize();
+            return this.poBranchCluster;
+        }
+        this.poBranchCluster.initialize();
+        return this.poBranchCluster;
     }
 
 }

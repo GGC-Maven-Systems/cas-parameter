@@ -104,15 +104,12 @@ public class Model extends Parameter {
             return poJSON;
         }
     }
-    
-    
-    
-        
+
     public JSONObject searchRecordbyMainModel(String value, boolean byCode) throws SQLException, GuanzonException {
         String lsSQL = getSQ_Browse();
-        Model_Model loModel; 
+        Model_Model loModel;
         loModel = new ParamModels(poGRider).Model();
-        
+
         lsSQL = MiscUtil.addCondition(lsSQL, "a.sMainModl = ''");
         poJSON = ShowDialogFX.Search(poGRider,
                 lsSQL,
@@ -144,6 +141,60 @@ public class Model extends Parameter {
 
         if (brandId != null) {
             lsSQL = MiscUtil.addCondition(lsSQL, "a.sBrandIDx = " + SQLUtil.toSQL(brandId));
+        }
+
+        poJSON = ShowDialogFX.Search(poGRider,
+                lsSQL,
+                value,
+                "ID»Description»Model Code»Mfg. Year»Brand",
+                "sModelIDx»sDescript»sModelCde»nMfgYearx»xBrandNme",
+                "a.sModelIDx»a.sDescript»a.sModelCde»nMfgYearx»b.sDescript",
+                byCode ? 0 : 2);
+
+        if (poJSON != null) {
+            return poModel.openRecord((String) poJSON.get("sModelIDx"));
+        } else {
+            poJSON = new JSONObject();
+            poJSON.put("result", "error");
+            poJSON.put("message", "No record loaded.");
+            return poJSON;
+        }
+    }
+
+    public JSONObject searchRecordbyIndustry(String value, boolean byCode, String industryId) throws SQLException, GuanzonException {
+        String lsSQL = getSQ_Browse();
+
+        if (industryId != null) {
+            lsSQL = MiscUtil.addCondition(lsSQL, "a.sIndstCdx = " + SQLUtil.toSQL(industryId));
+        }
+
+        poJSON = ShowDialogFX.Search(poGRider,
+                lsSQL,
+                value,
+                "ID»Description»Model Code»Mfg. Year»Brand",
+                "sModelIDx»sDescript»sModelCde»nMfgYearx»xBrandNme",
+                "a.sModelIDx»a.sDescript»a.sModelCde»nMfgYearx»b.sDescript",
+                byCode ? 0 : 2);
+
+        if (poJSON != null) {
+            return poModel.openRecord((String) poJSON.get("sModelIDx"));
+        } else {
+            poJSON = new JSONObject();
+            poJSON.put("result", "error");
+            poJSON.put("message", "No record loaded.");
+            return poJSON;
+        }
+    }
+
+    public JSONObject searchRecordbyIndustryWCondition(String value, boolean byCode, String industryId, String condition) throws SQLException, GuanzonException {
+        String lsSQL = getSQ_Browse();
+
+        if (industryId != null) {
+            lsSQL = MiscUtil.addCondition(lsSQL, "a.sIndstCdx = " + SQLUtil.toSQL(industryId));
+        }
+        if (condition != null) {
+
+            lsSQL = MiscUtil.addCondition(lsSQL, condition);
         }
 
         poJSON = ShowDialogFX.Search(poGRider,
@@ -196,7 +247,7 @@ public class Model extends Parameter {
 
         return MiscUtil.addCondition(lsSQL, lsCondition);
     }
-    
+
     public JSONObject getMainModelName(String mainMdlID) throws SQLException {
 
         JSONObject result = new JSONObject();
@@ -229,6 +280,5 @@ public class Model extends Parameter {
             return result;
         }
     }
-
 
 }
