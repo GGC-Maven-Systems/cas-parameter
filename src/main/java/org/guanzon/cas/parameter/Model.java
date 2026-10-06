@@ -154,7 +154,7 @@ public class Model extends Parameter {
     public JSONObject searchRecord(String value, boolean byCode, String brandId) throws SQLException, GuanzonException {
         String lsSQL = getSQ_Browse();
 
-        if (brandId != null) {
+        if (brandId != null && !"".equals(brandId)) {
             lsSQL = MiscUtil.addCondition(lsSQL, "a.sBrandIDx = " + SQLUtil.toSQL(brandId));
         }
 
