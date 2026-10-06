@@ -62,6 +62,14 @@ public class Model_Color extends Model {
         return (String) getValue("sColorCde");
     }
     
+    public JSONObject setIndustryCode(String industryCode) {
+        return setValue("sIndstCdx", industryCode);
+    }
+
+    public String getIndustryCode() {
+        return (String) getValue("sIndstCdx");
+    }
+    
     public JSONObject setMainColor(String mainColor) {
         return setValue("sMnColorx", mainColor);
     }
