@@ -22,8 +22,9 @@ public class Model_Model_Variant_Insurance extends Model {
             MiscUtil.initRowSet(poEntity);
             
             //assign default values
+            poEntity.updateObject("sVhclType", "0");
+            poEntity.updateObject("sBodyType", "0");
             poEntity.updateObject("nAuthCapx", 0);
-            poEntity.updateObject("cRecdStat", RecordStatus.ACTIVE);
             //end - assign default values
 
             poEntity.insertRow();
@@ -63,14 +64,16 @@ public class Model_Model_Variant_Insurance extends Model {
     public String getBodyType() {
         return (String) getValue("sBodyType");
     }
-
-    public JSONObject setAuthCapx(int authCapx) {
-        return setValue("nAuthCapx", authCapx);
+    
+    public JSONObject setAuthCapx(int sortOrder) {
+        return setValue("nAuthCapx", sortOrder);
     }
 
     public int getAuthCapx() {
-        Object value = getValue("nAuthCapx");
-        return value == null || "".equals(value) ? 0 : Integer.parseInt(value.toString());
+        if (getValue("nAuthCapx") == null || "".equals(getValue("nAuthCapx"))) {
+            return 0;
+        }
+        return Integer.parseInt(getValue("nAuthCapx").toString());
     }
 
     public JSONObject setTransmission(String transmission) {
@@ -108,6 +111,7 @@ public class Model_Model_Variant_Insurance extends Model {
 
     @Override
     public String getNextCode() {
-        return MiscUtil.getNextCode(getTable(), ID, false, poGRider.getGConnection().getConnection(), "");
+        return "";
+//        return MiscUtil.getNextCode(getTable(), ID, false, poGRider.getGConnection().getConnection(), "");
     }
 }
