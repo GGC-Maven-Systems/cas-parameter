@@ -15,15 +15,17 @@ public class Model_Model_Variant_Insurance extends Model {
     public void initialize() {
         try {
             poEntity = MiscUtil.xml2ResultSet(System.getProperty("sys.default.path.metadata") + XML, getTable());
-            
+
             poEntity.last();
             poEntity.moveToInsertRow();
 
             MiscUtil.initRowSet(poEntity);
-            
+
             //assign default values
-            poEntity.updateObject("sVhclType", "0");
-            poEntity.updateObject("sBodyType", "0");
+            poEntity.updateObject("sVhclType", "Commercial");
+            poEntity.updateObject("sBodyType", "Sedan");
+            poEntity.updateObject("sTransmss", "Manual");
+            poEntity.updateObject("nAuthCapx", 0);
             poEntity.updateObject("nAuthCapx", 0);
             //end - assign default values
 
@@ -64,7 +66,7 @@ public class Model_Model_Variant_Insurance extends Model {
     public String getBodyType() {
         return (String) getValue("sBodyType");
     }
-    
+
     public JSONObject setAuthCapx(int sortOrder) {
         return setValue("nAuthCapx", sortOrder);
     }
@@ -90,24 +92,23 @@ public class Model_Model_Variant_Insurance extends Model {
 
     public String getRecordStatus() {
         return (String) getValue("cRecdStat");
-    } 
-    
-    public JSONObject setModifyingId(String modifyingId){
+    }
+
+    public JSONObject setModifyingId(String modifyingId) {
         return setValue("sModified", modifyingId);
     }
-    
-    public String getModifyingId(){
+
+    public String getModifyingId() {
         return (String) getValue("sModified");
     }
-    
-    public JSONObject setModifiedDate(Date modifiedDate){
+
+    public JSONObject setModifiedDate(Date modifiedDate) {
         return setValue("dModified", modifiedDate);
     }
-    
-    public Date getModifiedDate(){
+
+    public Date getModifiedDate() {
         return (Date) getValue("dModified");
     }
-    
 
     @Override
     public String getNextCode() {
