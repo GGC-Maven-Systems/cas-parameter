@@ -27,6 +27,7 @@ public class Model_Model_Variant extends Model {
             //assign default values
             poEntity.updateObject("nSelPrice", 0);
             poEntity.updateObject("nYearMdlx", 0);
+            poEntity.updateObject("cEndOfLfe", "0");
             poEntity.updateObject("cRecdStat", RecordStatus.ACTIVE);
             //end - assign default values
 
@@ -104,6 +105,14 @@ public class Model_Model_Variant extends Model {
     public String getColorId() {
         return (String) getValue("sColorIDx");
     }
+    
+    public JSONObject setEndOfLife(String endOfLife) {
+        return setValue("cEndOfLfe", endOfLife);
+    }
+
+    public String getEndOfLife() {
+        return (String) getValue("cEndOfLfe");
+    }    
     
     public JSONObject setRecordStatus(String recordStatus) {
         return setValue("cRecdStat", recordStatus);
