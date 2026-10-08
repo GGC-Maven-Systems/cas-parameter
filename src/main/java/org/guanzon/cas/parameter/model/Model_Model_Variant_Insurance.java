@@ -22,10 +22,9 @@ public class Model_Model_Variant_Insurance extends Model {
             MiscUtil.initRowSet(poEntity);
 
             //assign default values
-            poEntity.updateObject("sVhclType", "Commercial");
+            poEntity.updateObject("sVhclType", "Private");
             poEntity.updateObject("sBodyType", "Sedan");
             poEntity.updateObject("sTransmss", "Manual");
-            poEntity.updateObject("nAuthCapx", 0);
             poEntity.updateObject("nAuthCapx", 0);
             //end - assign default values
 
