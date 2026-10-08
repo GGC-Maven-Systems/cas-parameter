@@ -40,7 +40,7 @@ public class Color extends Parameter{
         poJSON = new JSONObject();
         
         poModel.setIndustryCode(poGRider.getIndustry());
-        if (poGRider.getUserLevel() < UserRight.SYSADMIN && !"03".equals(poModel.getIndustryCode())){
+        if (poGRider.getUserLevel() < UserRight.SYSADMIN && !psCarIndustry.equals(poModel.getIndustryCode())){
             poJSON.put("result", "error");
             poJSON.put("message", "User is not allowed to save record.");
             return poJSON;
