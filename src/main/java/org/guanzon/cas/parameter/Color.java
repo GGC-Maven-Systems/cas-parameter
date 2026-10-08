@@ -129,8 +129,15 @@ public class Color extends Parameter{
                         " FROM Color a" +
                             " LEFT JOIN Color b ON a.sMnColorx = a.sColorIDx";
         
+        lsSQL = MiscUtil.addCondition(lsSQL, lsCondition);
+        
         if(psIndustryId != null && !"".equals(psIndustryId)){
-            lsSQL = lsSQL + " AND a.sIndstCdx = " +  SQLUtil.toSQL(psIndustryId);
+            if(psCarIndustry.equals(psIndustryId)){//mandatory filter color for car industry
+                lsSQL = lsSQL + " AND a.sIndstCdx = " +  SQLUtil.toSQL(psIndustryId);
+            } else {
+                lsSQL = lsSQL + " AND "
+                        + " ( a.sIndstCdx = " +  SQLUtil.toSQL(psIndustryId) + " OR a.sIndstCdx IS NULL OR a.sIndstCdx = '')";
+            }
         }
         
         return lsSQL;
