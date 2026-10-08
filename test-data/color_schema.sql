@@ -21,6 +21,7 @@ CREATE TABLE `color` (
   `sColorCde` varchar(25) DEFAULT NULL,
   `sMnColorx` varchar(7) DEFAULT NULL,
   `cDivision` char(1) DEFAULT NULL,
+  `sIndstCdx` varchar(2) DEFAULT NULL,
   `cRecdStat` char(1) DEFAULT NULL,
   `sModified` varchar(10) DEFAULT NULL,
   `dModified` datetime DEFAULT NULL,
