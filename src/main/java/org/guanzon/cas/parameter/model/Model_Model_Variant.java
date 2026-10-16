@@ -13,6 +13,7 @@ import org.json.simple.JSONObject;
 public class Model_Model_Variant extends Model {
     private Model_Model poModel;
     private Model_Color poColor;
+    private Model_Model_Variant_Insurance poVariantInsurance;
     
     @Override
     public void initialize() {
@@ -204,13 +205,50 @@ public class Model_Model_Variant extends Model {
                     return poColor;
                 }
                 else {
-                    poModel.initialize();
+                    poColor.initialize();
                     return poColor;
                 }
             }
         } else {
             poColor.initialize();
             return poColor;
+        }
+    }
+    
+    public Model_Model_Variant_Insurance VariantInsurance() throws SQLException, GuanzonException{
+        if (poVariantInsurance == null) {
+            poVariantInsurance = new Model_Model_Variant_Insurance();
+            poVariantInsurance.setApplicationDriver(poGRider);
+            poVariantInsurance.setXML("Model_Model_Variant_Insurance");
+            poVariantInsurance.setTableName("Model_Variant_Insurance");
+            poVariantInsurance.initialize();
+        }
+
+        String lsId = (String) (getValue("sVrntIDxx") == null ? "" : getValue("sVrntIDxx"));
+
+        if (!"".equals(lsId)){
+            if (poVariantInsurance.getEditMode() == EditMode.READY &&
+                poVariantInsurance.getVariantId().equals(lsId))
+                return poVariantInsurance;
+            else{
+                if (ReferenceCache.tryLoad("Model_Variant_Insurance", lsId, poVariantInsurance)) {
+                    return poVariantInsurance;
+                }
+
+                poJSON = poVariantInsurance.openRecord(lsId);
+
+                if ("success".equals((String) poJSON.get("result"))){
+                    ReferenceCache.store("Model_Variant_Insurance", lsId, poVariantInsurance);
+                    return poVariantInsurance;
+                }
+                else {
+                    poVariantInsurance.initialize();
+                    return poVariantInsurance;
+                }
+            }
+        } else {
+            poVariantInsurance.initialize();
+            return poVariantInsurance;
         }
     }
     
