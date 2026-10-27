@@ -24,6 +24,7 @@ import org.guanzon.cas.parameter.model.Model_Company;
 import org.guanzon.cas.parameter.model.Model_Country;
 import org.guanzon.cas.parameter.model.Model_Department;
 import org.guanzon.cas.parameter.model.Model_Industry;
+import org.guanzon.cas.parameter.model.Model_Insurance_Type;
 import org.guanzon.cas.parameter.model.Model_Inv_Location;
 import org.guanzon.cas.parameter.model.Model_Inv_Type;
 import org.guanzon.cas.parameter.model.Model_Inventory_Count_Type;
@@ -837,6 +838,23 @@ public class ParamModels {
 
         return poTransactionAccountChart;
     }
+    
+      public Model_Insurance_Type InsuranceType(){
+        if (poGRider == null){
+            System.err.println("ParamModels.InsuranceType: Application driver is not set.");
+            return null;
+        }
+
+        if (poInsuranceType == null){
+            poInsuranceType = new Model_Insurance_Type();
+            poInsuranceType.setApplicationDriver(poGRider);
+            poInsuranceType.setXML("Model_Insurance_Type");
+            poInsuranceType.setTableName("Insurance_Type");
+            poInsuranceType.initialize();
+        }
+
+        return poInsuranceType;
+    }
 
     private final GRiderCAS poGRider;
 
@@ -886,5 +904,6 @@ public class ParamModels {
     private Model_Unit_Conversion poConversion;
     private Model_Account_Chart poAccountChart;
     private Model_Account_ChartX poAccountChartX;
+    private Model_Insurance_Type poInsuranceType;
     private Model_Transaction_Account_Chart poTransactionAccountChart;
 }

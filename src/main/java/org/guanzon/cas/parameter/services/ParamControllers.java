@@ -815,6 +815,25 @@ public class ParamControllers {
         return poTransactionAccountChart;
     }
 
+    public InsuranceType InsuranceType() throws SQLException, GuanzonException {
+        if (poGRider == null) {
+            poLogWrapper.severe("ParamControllers.InsuranceType: Application driver is not set.");
+            return null;
+        }
+
+        if (poInsuranceType != null) {
+            return poInsuranceType;
+        }
+
+        poInsuranceType = new InsuranceType();
+        poInsuranceType.setApplicationDriver(poGRider);
+        poInsuranceType.setWithParentClass(false);
+        poInsuranceType.setLogWrapper(poLogWrapper);
+        poInsuranceType.initialize();
+        poInsuranceType.newRecord();
+        return poInsuranceType;
+    }
+
 
     private GRiderCAS poGRider;
     private LogWrapper poLogWrapper;
@@ -827,6 +846,7 @@ public class ParamControllers {
     private BranchCluster poBranchCluster;
     private BranchClusterDelivery poBranchClusterDelivery;
     private Brand poBrand;
+    private InsuranceType poInsuranceType;
     private Category poCategory;
     private CategoryLevel2 poCategory2;
     private CategoryLevel3 poCategory3;
