@@ -103,7 +103,8 @@ public class InsuranceType extends Parameter{
         String lsSQL = "SELECT" +
                             "  a.sInsTypID" +
                             ", a.sInsTypNm" +
-                            ", a.sIndstCdx" +
+                            ", a.cRegisTyp" +
+                            ", a.cMonitorx" +
                             ", a.cRecdStat" +
                             ", a.sModified" +
                             ", a.dModified" +
