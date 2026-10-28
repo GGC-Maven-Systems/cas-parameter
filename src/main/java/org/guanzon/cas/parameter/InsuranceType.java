@@ -13,11 +13,21 @@ import org.guanzon.cas.parameter.model.Model_Insurance_Type;
 import org.guanzon.cas.parameter.services.ParamModels;
 import org.json.simple.JSONObject;
 
-public class InsuranceType extends Parameter{
+public class InsuranceType extends Parameter {
+    
     Model_Insurance_Type poModel;
+    String psRegistrationType = "";
+
+    public String getPsRegistrationType() {
+        return psRegistrationType;
+    }
+
+    public void setPsRegistrationType(String psRegistrationType) {
+        this.psRegistrationType = psRegistrationType;
+    }
     
     @Override
-    public void initialize() throws SQLException, GuanzonException{
+    public void initialize() throws SQLException, GuanzonException {
         psRecdStat = Logical.YES;
         
         poModel = new ParamModels(poGRider).InsuranceType();
@@ -26,18 +36,18 @@ public class InsuranceType extends Parameter{
     }
     
     @Override
-    public JSONObject isEntryOkay() throws SQLException{
+    public JSONObject isEntryOkay() throws SQLException {
         poJSON = new JSONObject();
-        
+
 //        poModel.setIndustryCode(poGRider.getIndustry());
-        if (poGRider.getUserLevel() < UserRight.SYSADMIN){
+        if (poGRider.getUserLevel() < UserRight.SYSADMIN) {
             poJSON.put("result", "error");
             poJSON.put("message", "User is not allowed to save record.");
             return poJSON;
         } else {
             poJSON = new JSONObject();
             
-            if (poModel.getInsuranceTypeName()== null ||poModel.getInsuranceTypeName().isEmpty()){
+            if (poModel.getInsuranceTypeName() == null || poModel.getInsuranceTypeName().isEmpty()) {
                 poJSON.put("result", "error");
                 poJSON.put("message", "Description must not be empty.");
                 return poJSON;
@@ -55,27 +65,26 @@ public class InsuranceType extends Parameter{
     public Model_Insurance_Type getModel() {
         return poModel;
     }
-
+    
     @Override
     protected void saveComplete() {
         //Every lazy Brand() accessor across the model layer serves repeat lookups for this id
         //from ReferenceCache - drop the stale snapshot now that the record has changed.
         ReferenceCache.invalidate("Insurance_Type", poModel.getInsuranceTypeID());
     }
-
-
+    
     @Override
-    public JSONObject searchRecord(String value, boolean byCode) throws SQLException, GuanzonException{
+    public JSONObject searchRecord(String value, boolean byCode) throws SQLException, GuanzonException {
         String lsSQL = getSQ_Browse();
         
         poJSON = ShowDialogFX.Search(poGRider,
                 lsSQL,
                 value,
-                "ID»Description»Registration",
-                "sInsTypID»sInsTypNm»cRegisTyp",
+                "ID»Description»Registration Type",
+                "sInsTypID»sInsTypNm»xRegisTyp",
                 "a.sInsTypID»a.sInsTypNm»a.cRegisTyp",
                 byCode ? 0 : 1);
-
+        
         if (poJSON != null) {
             return poModel.openRecord((String) poJSON.get("sInsTypID"));
         } else {
@@ -87,28 +96,35 @@ public class InsuranceType extends Parameter{
     }
     
     @Override
-    public String getSQ_Browse(){
+    public String getSQ_Browse() {
         String lsCondition = "";
-
+        
         if (psRecdStat.length() > 1) {
             for (int lnCtr = 0; lnCtr <= psRecdStat.length() - 1; lnCtr++) {
                 lsCondition += ", " + SQLUtil.toSQL(Character.toString(psRecdStat.charAt(lnCtr)));
             }
-
+            
             lsCondition = "a.cRecdStat IN (" + lsCondition.substring(2) + ")";
         } else {
             lsCondition = "a.cRecdStat = " + SQLUtil.toSQL(psRecdStat);
         }
         
-        String lsSQL = "SELECT" +
-                            "  a.sInsTypID" +
-                            ", a.sInsTypNm" +
-                            ", a.cRegisTyp" +
-                            ", a.cMonitorx" +
-                            ", a.cRecdStat" +
-                            ", a.sModified" +
-                            ", a.dModified" +
-                        " FROM Insurance_Type a" ;
+        String lsSQL = "SELECT"
+                + "  a.sInsTypID"
+                + ", a.sInsTypNm"
+                + ", a.cRegisTyp"
+                + ", CASE a.cRegisTyp"
+                + "    WHEN '0' THEN 'New'"
+                + "    WHEN '1' THEN 'Transfer'"
+                + "    WHEN '2' THEN 'Renewal'"
+                + "    WHEN '3' THEN 'Transfer and Renewal'"
+                + "    ELSE ''"
+                + "  END AS xRegisTyp"
+                + ", a.cMonitorx"
+                + ", a.cRecdStat"
+                + ", a.sModified"
+                + ", a.dModified"
+                + " FROM Insurance_Type a";
         return MiscUtil.addCondition(lsSQL, lsCondition);
     }
 }
