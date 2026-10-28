@@ -71,9 +71,9 @@ public class InsuranceType extends Parameter{
         poJSON = ShowDialogFX.Search(poGRider,
                 lsSQL,
                 value,
-                "ID»Description»Industry",
-                "sInsTypID»sInsTypNm»xIndstDsc",
-                "a.sInsTypID»a.sInsTypNm»b.sInsTypNm",
+                "ID»Description»Registration",
+                "sInsTypID»sInsTypNm»cRegisTyp",
+                "a.sInsTypID»a.sInsTypNm»a.cRegisTyp",
                 byCode ? 0 : 1);
 
         if (poJSON != null) {
