@@ -14,27 +14,36 @@ import org.guanzon.cas.parameter.services.ParamModels;
 import org.json.simple.JSONObject;
 
 public class InsuranceType extends Parameter {
-    
+
     Model_Insurance_Type poModel;
     String psRegistrationType = "";
+    boolean pbInsuranceOnly = false;
 
-    public String getPsRegistrationType() {
+    public boolean isInsuranceOnly() {
+        return pbInsuranceOnly;
+    }
+
+    public void setInsuranceOnly(boolean pbInsuranceOnly) {
+        this.pbInsuranceOnly = pbInsuranceOnly;
+    }
+
+    public String getRegistrationType() {
         return psRegistrationType;
     }
 
-    public void setPsRegistrationType(String psRegistrationType) {
+    public void setRegistrationType(String psRegistrationType) {
         this.psRegistrationType = psRegistrationType;
     }
-    
+
     @Override
     public void initialize() throws SQLException, GuanzonException {
         psRecdStat = Logical.YES;
-        
+
         poModel = new ParamModels(poGRider).InsuranceType();
-        
+
         super.initialize();
     }
-    
+
     @Override
     public JSONObject isEntryOkay() throws SQLException {
         poJSON = new JSONObject();
@@ -46,37 +55,38 @@ public class InsuranceType extends Parameter {
             return poJSON;
         } else {
             poJSON = new JSONObject();
-            
+
             if (poModel.getInsuranceTypeName() == null || poModel.getInsuranceTypeName().isEmpty()) {
                 poJSON.put("result", "error");
                 poJSON.put("message", "Description must not be empty.");
                 return poJSON;
             }
-            
+
         }
         poModel.setModifiedBy(poGRider.Encrypt(poGRider.getUserID()));
         poModel.setModifiedDate(poGRider.getServerDate());
-        
+
         poJSON.put("result", "success");
         return poJSON;
     }
-    
+
     @Override
     public Model_Insurance_Type getModel() {
         return poModel;
     }
-    
+
     @Override
     protected void saveComplete() {
         //Every lazy Brand() accessor across the model layer serves repeat lookups for this id
         //from ReferenceCache - drop the stale snapshot now that the record has changed.
         ReferenceCache.invalidate("Insurance_Type", poModel.getInsuranceTypeID());
     }
-    
+
     @Override
     public JSONObject searchRecord(String value, boolean byCode) throws SQLException, GuanzonException {
         String lsSQL = getSQ_Browse();
-        
+        System.out.println("org.guanzon.cas.parameter.InsuranceType.searchRecord()");
+        System.out.println("Search Record Insurance Type = " + lsSQL);
         poJSON = ShowDialogFX.Search(poGRider,
                 lsSQL,
                 value,
@@ -84,7 +94,7 @@ public class InsuranceType extends Parameter {
                 "sInsTypID»sInsTypNm»xRegisTyp",
                 "a.sInsTypID»a.sInsTypNm»a.cRegisTyp",
                 byCode ? 0 : 1);
-        
+
         if (poJSON != null) {
             return poModel.openRecord((String) poJSON.get("sInsTypID"));
         } else {
@@ -94,21 +104,21 @@ public class InsuranceType extends Parameter {
             return poJSON;
         }
     }
-    
+
     @Override
     public String getSQ_Browse() {
         String lsCondition = "";
-        
+
         if (psRecdStat.length() > 1) {
             for (int lnCtr = 0; lnCtr <= psRecdStat.length() - 1; lnCtr++) {
                 lsCondition += ", " + SQLUtil.toSQL(Character.toString(psRecdStat.charAt(lnCtr)));
             }
-            
+
             lsCondition = "a.cRecdStat IN (" + lsCondition.substring(2) + ")";
         } else {
             lsCondition = "a.cRecdStat = " + SQLUtil.toSQL(psRecdStat);
         }
-        
+
         String lsSQL = "SELECT"
                 + "  a.sInsTypID"
                 + ", a.sInsTypNm"
@@ -125,6 +135,13 @@ public class InsuranceType extends Parameter {
                 + ", a.sModified"
                 + ", a.dModified"
                 + " FROM Insurance_Type a";
+
+        if (pbInsuranceOnly) {
+            lsSQL = MiscUtil.addCondition(lsSQL, "cRegisTyp IS NULL OR cRegisTyp = ''");
+        } else {
+            lsSQL = MiscUtil.addCondition(lsSQL, "cRegisTyp <>''");
+        }
         return MiscUtil.addCondition(lsSQL, lsCondition);
     }
+
 }
