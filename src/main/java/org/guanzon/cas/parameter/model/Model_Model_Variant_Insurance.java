@@ -3,13 +3,16 @@ package org.guanzon.cas.parameter.model;
 import org.guanzon.appdriver.agent.services.Model;
 import org.guanzon.appdriver.base.MiscUtil;
 import org.guanzon.appdriver.constant.EditMode;
-import org.guanzon.appdriver.constant.RecordStatus;
 import org.json.simple.JSONObject;
 
 import java.sql.SQLException;
 import java.util.Date;
+import org.guanzon.appdriver.agent.services.ReferenceCache;
+import org.guanzon.appdriver.base.GuanzonException;
 
 public class Model_Model_Variant_Insurance extends Model {
+    
+    private Model_Vehicle_Transmission_Type poTransmission;
 
     @Override
     public void initialize() {
@@ -112,6 +115,43 @@ public class Model_Model_Variant_Insurance extends Model {
     @Override
     public String getNextCode() {
         return "";
-//        return MiscUtil.getNextCode(getTable(), ID, false, poGRider.getGConnection().getConnection(), "");
+    }
+    
+    
+    public Model_Vehicle_Transmission_Type Transmission() throws SQLException, GuanzonException{
+        if (poTransmission == null) {
+            poTransmission = new Model_Vehicle_Transmission_Type();
+            poTransmission.setApplicationDriver(poGRider);
+            poTransmission.setXML("Model_Vehicle_Transmission_Type");
+            poTransmission.setTableName("Vehicle_Transmission_Type");
+            poTransmission.initialize();
+        }
+
+        String lsId = (String) (getValue("sTransmss") == null ? "" : getValue("sTransmss"));
+
+        if (!"".equals(lsId)){
+            if (poTransmission.getEditMode() == EditMode.READY &&
+                poTransmission.getTransmissionCode().equals(lsId))
+                return poTransmission;
+            else{
+                if (ReferenceCache.tryLoad("Vehicle_Transmission_Type", lsId, poTransmission)) {
+                    return poTransmission;
+                }
+
+                poJSON = poTransmission.openRecord(lsId);
+
+                if ("success".equals((String) poJSON.get("result"))){
+                    ReferenceCache.store("Vehicle_Transmission_Type", lsId, poTransmission);
+                    return poTransmission;
+                }
+                else {
+                    poTransmission.initialize();
+                    return poTransmission;
+                }
+            }
+        } else {
+            poTransmission.initialize();
+            return poTransmission;
+        }
     }
 }
