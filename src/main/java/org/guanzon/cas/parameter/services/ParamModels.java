@@ -1,53 +1,7 @@
 package org.guanzon.cas.parameter.services;
 
 import org.guanzon.appdriver.base.GRiderCAS;
-import org.guanzon.cas.parameter.model.Model_Account_Chart;
-import org.guanzon.cas.parameter.model.Model_Account_ChartX;
-import org.guanzon.cas.parameter.model.Model_Affiliated_Company;
-import org.guanzon.cas.parameter.model.Model_Banks;
-import org.guanzon.cas.parameter.model.Model_Banks_Branch;
-import org.guanzon.cas.parameter.model.Model_Barangay;
-import org.guanzon.cas.parameter.model.Model_Bin;
-import org.guanzon.cas.parameter.model.Model_Branch;
-import org.guanzon.cas.parameter.model.Model_Branch_Area;
-import org.guanzon.cas.parameter.model.Model_Branch_Cluster;
-import org.guanzon.cas.parameter.model.Model_Branch_Cluster_Delivery;
-import org.guanzon.cas.parameter.model.Model_Branch_Others;
-import org.guanzon.cas.parameter.model.Model_Brand;
-import org.guanzon.cas.parameter.model.Model_Category;
-import org.guanzon.cas.parameter.model.Model_Category_Level2;
-import org.guanzon.cas.parameter.model.Model_Category_Level3;
-import org.guanzon.cas.parameter.model.Model_Category_Level4;
-import org.guanzon.cas.parameter.model.Model_Color;
-import org.guanzon.cas.parameter.model.Model_Color_Detail;
-import org.guanzon.cas.parameter.model.Model_Company;
-import org.guanzon.cas.parameter.model.Model_Country;
-import org.guanzon.cas.parameter.model.Model_Department;
-import org.guanzon.cas.parameter.model.Model_Industry;
-import org.guanzon.cas.parameter.model.Model_Inv_Location;
-import org.guanzon.cas.parameter.model.Model_Inv_Type;
-import org.guanzon.cas.parameter.model.Model_Inventory_Count_Type;
-import org.guanzon.cas.parameter.model.Model_Labor;
-import org.guanzon.cas.parameter.model.Model_Labor_Category;
-import org.guanzon.cas.parameter.model.Model_Labor_Model;
-import org.guanzon.cas.parameter.model.Model_Made;
-import org.guanzon.cas.parameter.model.Model_Measure;
-import org.guanzon.cas.parameter.model.Model_Model;
-import org.guanzon.cas.parameter.model.Model_Model_Variant;
-import org.guanzon.cas.parameter.model.Model_Project;
-import org.guanzon.cas.parameter.model.Model_Province;
-import org.guanzon.cas.parameter.model.Model_Region;
-import org.guanzon.cas.parameter.model.Model_Relationship;
-import org.guanzon.cas.parameter.model.Model_Section;
-import org.guanzon.cas.parameter.model.Model_Size;
-import org.guanzon.cas.parameter.model.Model_Tax_Code;
-import org.guanzon.cas.parameter.model.Model_Term;
-import org.guanzon.cas.parameter.model.Model_Transaction_Account_Chart;
-import org.guanzon.cas.parameter.model.Model_TownCity;
-import org.guanzon.cas.parameter.model.Model_Unit_Conversion;
-import org.guanzon.cas.parameter.model.Model_Warehouse;
-import org.guanzon.cas.parameter.model.Model_xxxTransactionSource;
-import org.guanzon.cas.parameter.model.Model_xxxTransactionSourceTable;
+import org.guanzon.cas.parameter.model.*;
 
 public class ParamModels {
 
@@ -838,6 +792,23 @@ public class ParamModels {
         return poTransactionAccountChart;
     }
 
+    public Model_Supplier_Email SupplierEmail() {
+        if (poGRider == null) {
+            System.err.println("ParamModels.SupplierEmail: Application driver is not set.");
+            return null;
+        }
+
+        if (poSupplierEmail == null) {
+            poSupplierEmail = new Model_Supplier_Email();
+            poSupplierEmail.setApplicationDriver(poGRider);
+            poSupplierEmail.setXML("Model_Supplier_Email");
+            poSupplierEmail.setTableName("Supplier_Email");
+            poSupplierEmail.initialize();
+        }
+
+        return poSupplierEmail;
+    }
+
     private final GRiderCAS poGRider;
 
     private Model_Barangay poBarangay;
@@ -887,4 +858,5 @@ public class ParamModels {
     private Model_Account_Chart poAccountChart;
     private Model_Account_ChartX poAccountChartX;
     private Model_Transaction_Account_Chart poTransactionAccountChart;
+    private Model_Supplier_Email poSupplierEmail;
 }
